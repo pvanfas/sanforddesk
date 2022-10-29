@@ -9,8 +9,16 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
+  // check if internet is available, if not, load local html file (./renderer/offline.html),file:///home/sanford/Downloads/loading-screen-animation/dist/index.html
 
-  win.loadURL('https://sanfordcorp.co')
+  // else load the online html file (./renderer/loading.html) and load https://sanfordcorp.co 
+  // in the background, once it is loaded, load the url in the main window
+  win.loadFile('./renderer/loading.html')
+  // if internet is connected, load the online.html file
+  win.webContents.on('did-finish-load', () => {
+    win.webContents.executeJavaScript(`window.location.href = 'https://sanfordcorp.co'`)
+  })
+
 }
 
 app.whenReady().then(() => {
