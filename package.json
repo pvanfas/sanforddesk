@@ -7,5 +7,9 @@
     "start": "electron ."
   },
   "author": "PV Anfas",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^21.2.0",
+    "toastify-js": "^1.12.0"
+  }
 }
