@@ -1,14 +1,30 @@
-const path = require("path");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow } = require('electron')
+const path = require('path')
 
-function createMainWindow(){
-    const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        title: "SanfordCorp",
-    });
+function createWindow () {
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    }
+  })
 
-    mainWindow.loadFile(path.join(__dirname, "./renderer/index.html"));
+  win.loadURL('https://sanfordcorp.co')
 }
 
-app.whenReady().then(createMainWindow);
+app.whenReady().then(() => {
+  createWindow()
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow()
+    }
+  })
+})
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
