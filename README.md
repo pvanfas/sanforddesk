@@ -15,7 +15,7 @@ npm install --save-dev electron
   }
 }
 ```
-###Run the main process
+## Run the main process
 
 ```
 npm start
